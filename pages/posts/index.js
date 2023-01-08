@@ -8,14 +8,16 @@ export default function Posts(props) {
         <title>Posts Comp</title>
         <meta name="description" content="posts component" />
       </Head>
+
+      <div className="p-3">
       {props.posts.map((post) => (
-        <div  key={post.id}>
+        <div  key={post.id} className="shadow-sm p-3 my-3">
           <Link href={`/posts/${post.id}`}>
             {post.title}
           </Link>
         </div>
       ))}
-      Posts Component
+      </div>
     </div>
   );
 }

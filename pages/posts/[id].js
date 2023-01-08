@@ -1,8 +1,10 @@
 export default function Post1(props) {
   return (
     <>
+      <div className="p-3">
       <p>{props.post.title}</p>
       <p>{props.post.body}</p>
+      </div>
     </>
   );
 }
