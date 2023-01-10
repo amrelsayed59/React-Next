@@ -9,7 +9,7 @@ export default function Navbar() {
         <Link href="/posts">Posts</Link>
       </div> */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3">
-        <Link className="navbar-brand" href="/">
+        <Link className="navbar-brand" href="/profile">
           Navbar
         </Link>
         <button
@@ -34,6 +34,22 @@ export default function Navbar() {
             <li className="nav-item">
               <Link href="/posts" className="nav-link">
                 Posts
+              </Link>
+            </li>
+          </ul>
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item active">
+              <Link href="/signup" className="nav-link">
+                <button className="w-100 btn btn-primary" type="submit">
+                  Sign up
+                </button>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link href="/login" className="nav-link">
+                <button className="w-100 btn btn-primary" type="submit">
+                  Sign in
+                </button>
               </Link>
             </li>
           </ul>
