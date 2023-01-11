@@ -1,36 +1,41 @@
-import { errorHandler, responseHandler, validateAllOnce } from '../../../utils/common';
+import {
+  errorHandler,
+  responseHandler,
+  validateAllOnce,
+} from '../../../utils/common';
 import User from '../../../models/user';
-import {dbConnect} from '../../../lib/db-connect'
-import bcrypt from 'bcrypt'
+import { dbConnect } from '../../../lib/db-connect';
+import bcrypt from 'bcrypt';
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
+  if (req.method !== 'POST') {
     //return error
     errorHandler('Invalid Request Type', res);
-  }
-  try {
-    const { name, email, password } = req.body;
-    validateAllOnce(req.body);
+  } else {
+    try {
+      const { name, email, password } = req.body;
+      validateAllOnce(req.body);
 
-    //create db connection
-    await dbConnect();
+      //create db connection
+      await dbConnect();
 
-    const hashPassword = await bcrypt.hash(password, 8)
+      const hashPassword = await bcrypt.hash(password, 8);
 
-    const user = new User({
-      ...req.body,
-      password: hashPassword
-    });
-    const saveUser = await user.save();
-    if (saveUser) {
-      const userDoc = saveUser._doc;
-      console.log('userDoc', userDoc)
-      delete userDoc.password;
-      responseHandler(userDoc, res, 201);
-    } else {
-      errorHandler('Something went wrong', res);
+      const user = new User({
+        ...req.body,
+        password: hashPassword,
+      });
+      const saveUser = await user.save();
+      if (saveUser) {
+        const userDoc = saveUser._doc;
+        console.log('userDoc', userDoc);
+        delete userDoc.password;
+        responseHandler(userDoc, res, 201);
+      } else {
+        errorHandler('Something went wrong', res);
+      }
+    } catch (error) {
+      errorHandler(error, res);
     }
-  } catch (error) {
-    errorHandler(error, res);
   }
 }
